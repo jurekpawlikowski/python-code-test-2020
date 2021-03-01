@@ -5,10 +5,6 @@ services:
     links:
       - database
 
-  # sample NoSQL db
-  database:
-    image: amazon/dynamodb-local
-
   # sample RDBMS
-  # database:
-  #  image: postgres
+   database:
+    image: postgres
