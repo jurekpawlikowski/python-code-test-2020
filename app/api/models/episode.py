@@ -8,6 +8,7 @@ class Episode(BaseModel):
     """
     Class representing an episode of game of thrones
     """
+
     __tablename__ = "episodes"
     fields_to_serialize = [
         "season",

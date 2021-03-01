@@ -29,7 +29,7 @@ def register_blueprints(the_app: Flask):
     """
     from app.api.blueprints.episode import episode_blueprint
 
-    the_app.register_blueprint(episode_blueprint, url_prefix="/api/users/")
+    the_app.register_blueprint(episode_blueprint, url_prefix="/api/episodes/")
 
 
 def configure_error_handlers(the_app: Flask):

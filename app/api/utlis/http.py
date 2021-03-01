@@ -11,8 +11,8 @@ def json_response(status: int = 200, response_data: Dict = None) -> Response:
     headers = {"Content-Type": "application/json"}
 
     if response_data is None:
-        data = None
+        response = None
     else:
-        data = json.dumps(response_data)
+        response = json.dumps(response_data, default=str)
 
-    return Response(status=status, response=data, headers=headers)
+    return Response(status=status, response=response, headers=headers)
