@@ -1,3 +1,5 @@
+from json import JSONDecodeError
+
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 
@@ -28,8 +30,10 @@ def register_blueprints(the_app: Flask):
     Register all blueprints that needs to be served by the app
     """
     from app.api.blueprints.episode import episode_blueprint
+
     the_app.register_blueprint(episode_blueprint, url_prefix="/api/episodes/")
     from app.api.blueprints.comment import comment_blueprint
+
     the_app.register_blueprint(comment_blueprint, url_prefix="/api/comments/")
 
 
@@ -45,3 +49,7 @@ def configure_error_handlers(the_app: Flask):
     @the_app.errorhandler(405)
     def handle_405(e):
         return json_response(405, response_data={"error": "Method Not Allowed"})
+
+    @the_app.errorhandler(JSONDecodeError)
+    def handle_400(e):
+        return json_response(405, response_data={"error": "JSON is invalid"})

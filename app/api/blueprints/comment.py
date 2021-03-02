@@ -14,6 +14,11 @@ def read_comment(comment_id: int):
     Read details of a comment
     """
     comment = Comment.query.get(comment_id)
+    if comment is None:
+        return json_response(404)
+    import pdb
+
+    pdb.set_trace()
     return json_response(
         status=200,
         response_data={"data": {"comment": comment.serialize()}},
@@ -28,7 +33,7 @@ def create_comment():
     comment = Comment(**json.loads(request.data))
     comment.save()
     return json_response(
-        status=200,
+        status=201,
         response_data={"data": {"comment": comment.serialize()}},
     )
 
@@ -38,8 +43,10 @@ def update_comment(comment_id: int):
     """
     Update a comment
     """
-    comment = Comment.query.get(comment_id)
     data = json.loads(request.data)
+    comment = Comment.query.get(comment_id)
+    if comment is None:
+        return json_response(404)
     comment.content = data["content"]
     comment.author_name = data["author_name"]
     comment.save()
@@ -55,5 +62,7 @@ def delete_comment(comment_id: int):
     Delete a comment
     """
     comment = Comment.query.get(comment_id)
+    if comment is None:
+        return json_response(404)
     comment.delete()
     return json_response(status=200)

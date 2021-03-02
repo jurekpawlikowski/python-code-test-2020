@@ -20,6 +20,7 @@ def main():
     @manager.command
     def load_data():
         from app.omdb import OMDBClient
+
         client = OMDBClient(app.config["OMDB_API_KEY"])
         client.load_data()
 

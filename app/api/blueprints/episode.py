@@ -37,6 +37,8 @@ def get_episode(season_id: int, episode_id: int):
     Get details of an episode
     """
     episode = Episode.query.get((season_id, episode_id))
+    if episode is None:
+        return json_response(status=404)
     return json_response(
         status=200,
         response_data={"data": {"episode": episode.serialize()}},
