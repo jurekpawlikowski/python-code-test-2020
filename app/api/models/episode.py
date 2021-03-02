@@ -6,7 +6,7 @@ from app.factory import db
 
 class Episode(BaseModel):
     """
-    Class representing an episode of game of thrones
+    Class representing an episode of Game of Thrones
     """
 
     __tablename__ = "episodes"

@@ -28,8 +28,9 @@ def register_blueprints(the_app: Flask):
     Register all blueprints that needs to be served by the app
     """
     from app.api.blueprints.episode import episode_blueprint
-
     the_app.register_blueprint(episode_blueprint, url_prefix="/api/episodes/")
+    from app.api.blueprints.comment import comment_blueprint
+    the_app.register_blueprint(comment_blueprint, url_prefix="/api/comments/")
 
 
 def configure_error_handlers(the_app: Flask):
