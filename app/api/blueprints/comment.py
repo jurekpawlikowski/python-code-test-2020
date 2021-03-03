@@ -16,9 +16,6 @@ def read_comment(comment_id: int):
     comment = Comment.query.get(comment_id)
     if comment is None:
         return json_response(404)
-    import pdb
-
-    pdb.set_trace()
     return json_response(
         status=200,
         response_data={"data": {"comment": comment.serialize()}},
@@ -30,7 +27,17 @@ def create_comment():
     """
     Create a comment
     """
-    comment = Comment(**json.loads(request.data))
+    data = json.loads(request.data)
+    try:
+        comment = Comment(
+            season=data["season"],
+            episode=data["episode"],
+            content=data["content"],
+            author_name=data["author_name"]
+        )
+    except KeyError as e:
+        return json_response(status=400, response_data={"error": f"Your payload is missing {e.args[0]} field"})
+
     comment.save()
     return json_response(
         status=201,
@@ -47,8 +54,11 @@ def update_comment(comment_id: int):
     comment = Comment.query.get(comment_id)
     if comment is None:
         return json_response(404)
-    comment.content = data["content"]
-    comment.author_name = data["author_name"]
+    try:
+        comment.content = data["content"]
+        comment.author_name = data["author_name"]
+    except KeyError as e:
+        return json_response(status=400, response_data={"error": f"Your payload is missing {e.args[0]} field"})
     comment.save()
     return json_response(
         status=200,

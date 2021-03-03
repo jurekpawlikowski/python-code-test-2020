@@ -1,10 +1,20 @@
 version: "3.5"
 services:
   python-code-test:
-    image: ostmodern/python-code-test:latest
+    image: ostmodern-got
     links:
       - database
 
   # sample RDBMS
    database:
     image: postgres
+    container_name: postgres
+    environment:
+        - POSTGRES_USER=got_user
+        - POSTGRES_PASSWORD=$POSTGRES_PASS
+        - POSTGRES_DB=got_db
+    restart: unless-stopped
+    volumes:
+      - 'postgres-data:/var/lib/postgresql/data'
+    ports:
+      - "5432:5432"

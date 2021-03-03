@@ -51,5 +51,5 @@ def configure_error_handlers(the_app: Flask):
         return json_response(405, response_data={"error": "Method Not Allowed"})
 
     @the_app.errorhandler(JSONDecodeError)
-    def handle_400(e):
-        return json_response(405, response_data={"error": "JSON is invalid"})
+    def handle_invalid_json(e):
+        return json_response(400, response_data={"error": "JSON is invalid"})

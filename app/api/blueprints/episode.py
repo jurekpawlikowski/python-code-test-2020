@@ -1,4 +1,4 @@
-from flask import Blueprint
+from flask import Blueprint, request
 
 from app.api.models import Episode, Comment
 from app.api.utlis.http import json_response
@@ -11,6 +11,11 @@ def list_episodes():
     """
     List all episodes of the system
     """
+    min_imdb_rating = request.args.get("min_imdb_rating")
+    if min_imdb_rating:
+        episodes = Episode.query.filter(Episode.imdb_rating >= min_imdb_rating)
+    else:
+        episodes = Episode.all()
     return json_response(
         status=200,
         response_data={
@@ -24,7 +29,7 @@ def list_episodes():
                             "imdb_rating",
                         ]
                     )
-                    for episode in Episode.all()
+                    for episode in episodes
                 ]
             },
         },
