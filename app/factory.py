@@ -4,13 +4,14 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 
 from app.api.utlis.http import json_response
+from app.config import Config
 
 db = SQLAlchemy()
 
 
 def create_app() -> Flask:
     app = Flask(__name__)
-    app.config.from_envvar("APP_CONFIG")
+    app.config.from_object(Config)
     register_extensions(app)
     register_blueprints(app)
     configure_error_handlers(app)

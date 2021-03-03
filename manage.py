@@ -3,6 +3,7 @@ import os
 from flask_script import Manager
 from flask_migrate import MigrateCommand, Migrate
 
+from app.api.models import Episode
 from app.factory import create_app, db
 
 app = create_app()
@@ -20,6 +21,9 @@ def main():
     @manager.command
     def load_data():
         from app.omdb import OMDBClient
+
+        if Episode.query.count() == 73:
+            return
 
         client = OMDBClient(app.config["OMDB_API_KEY"])
         client.load_data()
