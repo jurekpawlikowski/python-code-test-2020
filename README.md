@@ -35,3 +35,12 @@ Nice to have:
 * Design and implement a separate CRUD API for these text comments.
 * Ability to filter episodes where `imdbRating` is greater than 8.8 for a season or for all seasons.
 * Write some unit tests
+
+
+How to run:
+To run the app you need an OMDB_API_KEY and a POSTGRES_PASS (can be anything random) as environment variables.
+Please build the docker image like:
+```bash
+docker build . -t ostmodern-got
+```
+The app is accessible on port 5000 for testing.
